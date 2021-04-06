@@ -7,10 +7,12 @@ import com.chimas.study_group.app.user.User;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.chimas.study_group.app.App.students;
+import static com.chimas.study_group.app.App.groups;
+
 public class StudentService {
 
-    public static Map students = new HashMap<>();
-    public static Map groups = new HashMap<>();
+
     private static final AtomicInteger count = new AtomicInteger(0);
 
     public Student findById(String id) {
@@ -55,14 +57,28 @@ public class StudentService {
 
 
     public Student enterGroup(int groupId, int studentId) {
+
         Student student = (Student) students.get(Integer.toString(studentId));
+        Group group = (Group) groups.get(Integer.toString(groupId));
 
-        HashSet<Integer> groupList = new HashSet<Integer>(student.getGroupIds());
-        groupList.add(groupId);
-        ArrayList<Integer> convertedGroupList = new ArrayList<Integer>(groupList);
+        try {
+            HashSet<Integer> groupList = new HashSet<Integer>(student.getGroupIds());
+            HashSet<Integer> studentsList = new HashSet<Integer>(group.getStudentIds());
 
-        student.setGroupIds(groupList);
+
+            groupList.add(groupId);
+            studentsList.add(studentId);
+
+            student.setGroupIds(groupList);
+            group.setStudentIds(studentsList);
+        } catch (Exception e){
+            new Error(e);
+        }
+
+
+
         students.put(studentId, student);
+        groups.put(groupId, group);
 
         return student;
 

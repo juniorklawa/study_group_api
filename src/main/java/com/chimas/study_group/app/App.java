@@ -5,17 +5,27 @@ import static spark.Spark.*;
 
 import com.chimas.study_group.app.group.Group;
 import com.chimas.study_group.app.group.GroupService;
+import com.chimas.study_group.app.note.Note;
+import com.chimas.study_group.app.note.NoteService;
 import com.chimas.study_group.app.student.Student;
 import com.chimas.study_group.app.student.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class App {
 
+
+    public static Map students = new HashMap<>();
+    public static Map groups = new HashMap<>();
+    public static Map notes = new HashMap<>();
+
     private static StudentService studentService = new StudentService();
     private static GroupService groupService = new GroupService();
+    private static NoteService noteService = new NoteService();
     private static ObjectMapper om = new ObjectMapper();
 
     public static void main(String[] args) {
@@ -149,6 +159,26 @@ public class App {
 
             response.status(201);
             return om.writeValueAsString(student);
+        });
+
+
+
+
+
+        //NOTES
+
+        // Add a Note
+        post("/group/note/add", (request, response) -> {
+            JSONObject responseObject = new JSONObject(request.body());
+
+            String title = responseObject.getString("title");
+            String description = responseObject.getString("description");
+            int creatorId = responseObject.getInt("creatorId");
+            int groupId = responseObject.getInt("groupId");
+
+            Note note = noteService.addNote(title,description, creatorId,groupId);
+            response.status(201);
+            return om.writeValueAsString(note);
         });
 
 

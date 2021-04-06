@@ -1,17 +1,14 @@
 package com.chimas.study_group.app.group;
-import com.chimas.study_group.app.note.Note;
-import com.chimas.study_group.app.student.Student;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+
+
+import static com.chimas.study_group.app.App.groups;
 
 public class GroupService {
 
 
-    public static Map groups = new HashMap<>();
     private static final AtomicInteger count = new AtomicInteger(0);
 
     public Group findById(String id) {
@@ -20,8 +17,11 @@ public class GroupService {
 
     public Group add(String name, String subject, String whatsAppLink, int creatorId) {
         int currentId = count.incrementAndGet();
-        Note[] notes = {};
-        Group group = new Group(currentId, name, subject, creatorId, whatsAppLink,notes);
+
+        HashSet<Integer> studentIds = new HashSet<Integer>();
+        HashSet<Integer> noteIds = new HashSet<Integer>();
+
+        Group group = new Group(currentId, name, subject, creatorId, whatsAppLink,studentIds,noteIds);
         groups.put(String.valueOf(currentId), group);
         return group;
     }
