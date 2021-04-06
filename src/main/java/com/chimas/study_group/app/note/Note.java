@@ -8,13 +8,15 @@ public class Note {
     private String title;
     private String description;
     private int creatorId;
+    private Student creator;
 
 
-    public Note(int id, String title, String description, int creatorId) {
+    public Note(int id, String title, String description, int creatorId, Student creator) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.creatorId = creatorId;
+        this.creator = creator;
     }
 
     public int getId() {
@@ -47,5 +49,13 @@ public class Note {
 
     public void setCreatorId(int creatorId) {
         this.creatorId = creatorId;
+    }
+
+    public Student getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Student creator) {
+        this.creator = creator;
     }
 }

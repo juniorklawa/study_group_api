@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.*;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -147,7 +148,6 @@ public class App {
 
 
         post("/group/user/enter", (request, response) -> {
-            System.out.println("ENTREI");
 
             JSONObject responseObject = new JSONObject(request.body());
 
@@ -180,6 +180,46 @@ public class App {
             response.status(201);
             return om.writeValueAsString(note);
         });
+
+
+        get("/group/notes/list/:groupId", (request, response) -> {
+
+
+            Group group = groupService.findById(request.params(":groupId"));
+
+
+            HashSet<Note> notes = new HashSet<Note>();
+
+
+            for (int noteId : group.getNoteIds()) {
+                Note note = noteService.findById(Integer.toString(noteId));
+                notes.add(note);
+            }
+
+
+            return om.writeValueAsString(notes);
+        });
+
+
+        get("/group/students/list/:groupId", (request, response) -> {
+
+
+            Group group = groupService.findById(request.params(":groupId"));
+
+
+            HashSet<Student> students = new HashSet<Student>();
+
+
+            for (int studentId : group.getStudentIds()) {
+                Student student = studentService.findById(Integer.toString(studentId));
+                students.add(student);
+            }
+
+
+            return om.writeValueAsString(students);
+        });
+
+
 
 
         studentService.add("Everaldo Jr", "everaldo@email.com","everaldojunior","1798200");

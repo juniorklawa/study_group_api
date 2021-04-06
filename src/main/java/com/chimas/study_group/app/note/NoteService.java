@@ -26,6 +26,8 @@ public class NoteService {
 
         Group group = (Group) groups.get(Integer.toString(groupId));
 
+        Student student = (Student) students.get(Integer.toString(creatorId));
+
         try {
             HashSet<Integer> noteList = new HashSet<Integer>(group.getNoteIds());
             noteList.add(currentId);
@@ -36,7 +38,7 @@ public class NoteService {
 
 
 
-        Note note = new Note(currentId,title,description,creatorId);
+        Note note = new Note(currentId,title,description,creatorId,student);
         notes.put(String.valueOf(currentId), note);
 
 
