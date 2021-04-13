@@ -20,8 +20,9 @@ public class GroupService {
 
         HashSet<Integer> studentIds = new HashSet<Integer>();
         HashSet<Integer> noteIds = new HashSet<Integer>();
+        HashSet<Integer> videoIds = new HashSet<Integer>();
 
-        Group group = new Group(currentId, name, subject, creatorId, whatsAppLink,studentIds,noteIds);
+        Group group = new Group(currentId, name, subject, creatorId, whatsAppLink,studentIds,noteIds,videoIds);
         groups.put(String.valueOf(currentId), group);
         return group;
     }

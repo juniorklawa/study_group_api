@@ -16,16 +16,25 @@ public class StudentService {
     private static final AtomicInteger count = new AtomicInteger(0);
 
     public Student findById(String id) {
+
+        System.out.println(id);
+
         return (Student) students.get(id);
+    }
+
+    public Student findByEmail(String email) {
+
+
+        return (Student) students.get(email);
     }
 
     public Student add(String name, String email, String nickname, String ra) {
         int currentId = count.incrementAndGet();
 
         HashSet<Integer> groupIds = new HashSet<Integer>();
-
+        System.out.println();
         Student student = new Student(currentId, name, email, nickname, ra,groupIds);
-        students.put(String.valueOf(currentId), student);
+        students.put(email, student);
         return student;
     }
 

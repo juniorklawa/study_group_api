@@ -12,8 +12,9 @@ public class Group {
     private String whatsAppLink;
     private HashSet<Integer> studentIds;
     private HashSet<Integer> noteIds;
+    private HashSet<Integer> videoIds;
 
-    public Group(int id, String name, String subject, int creatorId, String whatsAppLink, HashSet<Integer> studentIds,HashSet<Integer> noteIds) {
+    public Group(int id, String name, String subject, int creatorId, String whatsAppLink, HashSet<Integer> studentIds,HashSet<Integer> noteIds, HashSet<Integer> videoIds) {
         this.name = name;
         this.subject = subject;
         this.id = id;
@@ -21,6 +22,7 @@ public class Group {
         this.whatsAppLink = whatsAppLink;
         this.studentIds = studentIds;
         this.noteIds = noteIds;
+        this.videoIds = videoIds;
     }
 
 
@@ -75,6 +77,14 @@ public class Group {
 
     public HashSet<Integer> getNoteIds() {
         return noteIds;
+    }
+
+    public HashSet<Integer> getVideoIds() {
+        return videoIds;
+    }
+
+    public void setVideoIds(HashSet<Integer> videoIds) {
+        this.videoIds = videoIds;
     }
 
     public void setNoteIds(HashSet<Integer> noteIds) {

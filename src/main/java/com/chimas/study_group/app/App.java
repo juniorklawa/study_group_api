@@ -9,8 +9,11 @@ import com.chimas.study_group.app.note.Note;
 import com.chimas.study_group.app.note.NoteService;
 import com.chimas.study_group.app.student.Student;
 import com.chimas.study_group.app.student.StudentService;
+import com.chimas.study_group.app.video.Video;
+import com.chimas.study_group.app.video.VideoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.*;
+import spark.Filter;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,15 +26,43 @@ public class App {
     public static Map students = new HashMap<>();
     public static Map groups = new HashMap<>();
     public static Map notes = new HashMap<>();
+    public static Map videos = new HashMap<>();
 
     private static StudentService studentService = new StudentService();
     private static GroupService groupService = new GroupService();
     private static NoteService noteService = new NoteService();
+    private static VideoService videoService = new VideoService();
     private static ObjectMapper om = new ObjectMapper();
 
     public static void main(String[] args) {
 
         port(8080);
+
+
+
+
+        options("/*",
+                (request, response) -> {
+
+                    String accessControlRequestHeaders = request
+                            .headers("Access-Control-Request-Headers");
+                    if (accessControlRequestHeaders != null) {
+                        response.header("Access-Control-Allow-Headers",
+                                accessControlRequestHeaders);
+                    }
+
+                    String accessControlRequestMethod = request
+                            .headers("Access-Control-Request-Method");
+                    if (accessControlRequestMethod != null) {
+                        response.header("Access-Control-Allow-Methods",
+                                accessControlRequestMethod);
+                    }
+
+                    return "OK";
+                });
+
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+
 
         get("/", (request, response) -> "API Grupo de Estudos");
 
@@ -55,6 +86,24 @@ public class App {
         // Get User by ID
         get("/student/:id", (request, response) -> {
             Student student = studentService.findById(request.params(":id"));
+            if (student != null) {
+                return om.writeValueAsString(student);
+            } else {
+                response.status(404); // 404 Not found
+                return om.writeValueAsString("student not found");
+            }
+        });
+
+
+        post("/auth", (request, response) -> {
+
+            JSONObject responseObject = new JSONObject(request.body());
+
+            String email = responseObject.getString("email");
+
+            System.out.println(email);
+
+            Student student = studentService.findByEmail(email);
             if (student != null) {
                 return om.writeValueAsString(student);
             } else {
@@ -199,6 +248,46 @@ public class App {
 
             return om.writeValueAsString(notes);
         });
+
+
+
+
+        //NOTES
+
+        // Add a Note
+        post("/group/video/add", (request, response) -> {
+            JSONObject responseObject = new JSONObject(request.body());
+
+            String title = responseObject.getString("title");
+            String url = responseObject.getString("url");
+            int creatorId = responseObject.getInt("creatorId");
+            int groupId = responseObject.getInt("groupId");
+
+            Video video = videoService.addVideo(title,url, creatorId,groupId);
+            response.status(201);
+            return om.writeValueAsString(video);
+        });
+
+
+        get("/group/videos/list/:groupId", (request, response) -> {
+
+
+            Group group = groupService.findById(request.params(":groupId"));
+
+
+            HashSet<Video> videos = new HashSet<Video>();
+
+
+            for (int videoId : group.getVideoIds()) {
+                Video video = videoService.findById(Integer.toString(videoId));
+                videos.add(video);
+            }
+
+
+            return om.writeValueAsString(notes);
+        });
+
+
 
 
         get("/group/students/list/:groupId", (request, response) -> {

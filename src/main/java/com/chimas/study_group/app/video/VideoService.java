@@ -1,7 +1,7 @@
-package com.chimas.study_group.app.note;
-
+package com.chimas.study_group.app.video;
 
 import com.chimas.study_group.app.group.Group;
+import com.chimas.study_group.app.note.Note;
 import com.chimas.study_group.app.student.Student;
 
 import java.util.ArrayList;
@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.chimas.study_group.app.App.*;
+import static com.chimas.study_group.app.App.videos;
 
-public class NoteService {
+public class VideoService {
 
     private static final AtomicInteger count = new AtomicInteger(0);
 
-    public Note findById(String id) {
-        return (Note) notes.get(id);
+    public Video findById(String id) {
+        return (Video) videos.get(id);
     }
 
-    public Note addNote(String title, String description, int creatorId, int groupId) {
-
+    public Video addVideo(String title, String url, int creatorId, int groupId) {
 
         int currentId = count.incrementAndGet();
 
@@ -32,25 +32,31 @@ public class NoteService {
             HashSet<Integer> noteList = new HashSet<Integer>(group.getNoteIds());
             noteList.add(currentId);
             group.setNoteIds(noteList);
+
+
+            HashSet<Integer> videoList = new HashSet<Integer>(group.getVideoIds());
+            videoList.add(currentId);
+            group.setVideoIds(noteList);
+
         } catch (Exception e){
             new Error(e);
         }
 
-        Note note = new Note(currentId,title,description,creatorId,student);
-        notes.put(String.valueOf(currentId), note);
+        Video video = new Video(currentId,title,url,creatorId,student);
+        videos.put(String.valueOf(currentId), video);
 
-        return note;
+        return video;
     }
 
 
     public void delete(String id) {
-        notes.remove(id);
+        videos.remove(id);
     }
 
     public List findAll() {
-        return new ArrayList<>(notes.values());
+        return new ArrayList<>(videos.values());
     }
 
-    public NoteService() {
+    public VideoService() {
     }
 }

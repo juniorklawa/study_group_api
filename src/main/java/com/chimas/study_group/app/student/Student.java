@@ -10,7 +10,7 @@ public class Student extends User {
     private HashSet<Integer> groupIds;
 
     public Student(int id, String name, String email, String nickname, String ra, HashSet<Integer> groupIds) {
-        super(id, name, email, nickname);
+        super(email,id, name, nickname);
         this.groupIds = groupIds;
         this.ra = ra;
     }

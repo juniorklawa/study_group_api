@@ -2,12 +2,12 @@ package com.chimas.study_group.app.user;
 
 public abstract class User {
 
+    private String nickname;
     private int id;
     private String name;
     private String email;
-    private String nickname;
 
-    public User(int id, String name, String email, String nickname) {
+    public User(String email, int id, String name, String nickname) {
         this.id = id;
         this.name = name;
         this.email = email;
