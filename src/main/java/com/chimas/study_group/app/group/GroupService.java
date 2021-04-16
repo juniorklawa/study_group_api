@@ -15,14 +15,15 @@ public class GroupService {
         return (Group) groups.get(id);
     }
 
-    public Group add(String name, String subject, String whatsAppLink, int creatorId) {
+    public Group add(String name, String subject, String whatsAppLink, String creatorEmail) {
         int currentId = count.incrementAndGet();
 
         HashSet<String> studentEmails = new HashSet<String>();
         HashSet<Integer> noteIds = new HashSet<Integer>();
         HashSet<Integer> videoIds = new HashSet<Integer>();
 
-        Group group = new Group(currentId, name, subject, creatorId, whatsAppLink,studentEmails,noteIds,videoIds);
+        studentEmails.add(creatorEmail);
+        Group group = new Group(currentId, name, subject, creatorEmail, whatsAppLink,studentEmails,noteIds,videoIds);
         groups.put(String.valueOf(currentId), group);
         return group;
     }

@@ -163,9 +163,13 @@ public class App {
 
             String name = responseObject.getString("name");
             String subject = responseObject.getString("subject");
+            String creatorEmail = responseObject.getString("creatorEmail");
             String whatsAppLink = responseObject.getString("whatsAppLink");
 
-            Group group = groupService.add(name, subject,whatsAppLink,1);
+            Group group = groupService.add(name, subject,whatsAppLink,creatorEmail);
+
+
+            studentService.enterGroup(group.getId(),creatorEmail);
             response.status(201);
             return om.writeValueAsString(group);
         });
@@ -311,12 +315,13 @@ public class App {
 
 
         studentService.add("Everaldo Jr", "everaldo@email.com","1798200");
-        groupService.add("ED2 - BSI", "Estrutura de Dados 2", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
-        groupService.add("Psicologia - S75", "Psicologia aplicada ao Trabalho", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
-        groupService.add("Economia - Professora Maria", "Economia", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
-        groupService.add("Sociologia - S71", "Sociologia", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
-        groupService.add("Cálculo 3 - S93", "Cálculo", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
-        groupService.add("Matemática Discreta - S73", "Matemática", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
+        studentService.add("Seeder", "abc@abc.com","1798201");
+        groupService.add("ED2 - BSI", "Estrutura de Dados 2", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
+        groupService.add("Psicologia - S75", "Psicologia aplicada ao Trabalho", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
+        groupService.add("Economia - Professora Maria", "Economia", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
+        groupService.add("Sociologia - S71", "Sociologia", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
+        groupService.add("Cálculo 3 - S93", "Cálculo", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
+        groupService.add("Matemática Discreta - S73", "Matemática", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
 
 
         System.out.println("Running server on port 8080");

@@ -8,17 +8,17 @@ public class Group {
     private String name;
     private String subject;
     private int id;
-    private int creatorId;
+    private String creatorEmail;
     private String whatsAppLink;
     private HashSet<String> studentEmails;
     private HashSet<Integer> noteIds;
     private HashSet<Integer> videoIds;
 
-    public Group(int id, String name, String subject, int creatorId, String whatsAppLink, HashSet<String> studentEmails,HashSet<Integer> noteIds, HashSet<Integer> videoIds) {
+    public Group(int id, String name, String subject, String creatorEmail, String whatsAppLink, HashSet<String> studentEmails,HashSet<Integer> noteIds, HashSet<Integer> videoIds) {
         this.name = name;
         this.subject = subject;
         this.id = id;
-        this.creatorId = creatorId;
+        this.creatorEmail = creatorEmail;
         this.whatsAppLink = whatsAppLink;
         this.studentEmails = studentEmails;
         this.noteIds = noteIds;
@@ -50,12 +50,12 @@ public class Group {
         this.id = id;
     }
 
-    public int getCreatorId() {
-        return creatorId;
+    public String getCreatorEmail() {
+        return creatorEmail;
     }
 
-    public void setCreatorId(int creatorId) {
-        this.creatorId = creatorId;
+    public void setCreatorEmail(String creatorEmail) {
+        this.creatorEmail = creatorEmail;
     }
 
     public String getWhatsAppLink() {
