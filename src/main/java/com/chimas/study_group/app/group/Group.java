@@ -10,17 +10,17 @@ public class Group {
     private int id;
     private int creatorId;
     private String whatsAppLink;
-    private HashSet<Integer> studentIds;
+    private HashSet<String> studentEmails;
     private HashSet<Integer> noteIds;
     private HashSet<Integer> videoIds;
 
-    public Group(int id, String name, String subject, int creatorId, String whatsAppLink, HashSet<Integer> studentIds,HashSet<Integer> noteIds, HashSet<Integer> videoIds) {
+    public Group(int id, String name, String subject, int creatorId, String whatsAppLink, HashSet<String> studentEmails,HashSet<Integer> noteIds, HashSet<Integer> videoIds) {
         this.name = name;
         this.subject = subject;
         this.id = id;
         this.creatorId = creatorId;
         this.whatsAppLink = whatsAppLink;
-        this.studentIds = studentIds;
+        this.studentEmails = studentEmails;
         this.noteIds = noteIds;
         this.videoIds = videoIds;
     }
@@ -67,12 +67,12 @@ public class Group {
     }
 
 
-    public HashSet<Integer> getStudentIds() {
-        return studentIds;
+    public HashSet<String> getStudentEmails() {
+        return studentEmails;
     }
 
-    public void setStudentIds(HashSet<Integer> studentIds) {
-        this.studentIds = studentIds;
+    public void setStudentEmails(HashSet<String> studentEmails) {
+        this.studentEmails = studentEmails;
     }
 
     public HashSet<Integer> getNoteIds() {

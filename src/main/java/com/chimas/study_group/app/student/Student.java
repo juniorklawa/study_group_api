@@ -9,8 +9,8 @@ public class Student extends User {
     private String ra;
     private HashSet<Integer> groupIds;
 
-    public Student(int id, String name, String email, String nickname, String ra, HashSet<Integer> groupIds) {
-        super(email,id, name, nickname);
+    public Student(int id, String name, String email, String ra, HashSet<Integer> groupIds) {
+        super(email,id, name);
         this.groupIds = groupIds;
         this.ra = ra;
     }

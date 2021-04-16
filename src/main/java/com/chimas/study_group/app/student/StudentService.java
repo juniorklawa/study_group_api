@@ -16,9 +16,6 @@ public class StudentService {
     private static final AtomicInteger count = new AtomicInteger(0);
 
     public Student findById(String id) {
-
-        System.out.println(id);
-
         return (Student) students.get(id);
     }
 
@@ -28,12 +25,11 @@ public class StudentService {
         return (Student) students.get(email);
     }
 
-    public Student add(String name, String email, String nickname, String ra) {
+    public Student add(String name, String email, String ra) {
         int currentId = count.incrementAndGet();
 
         HashSet<Integer> groupIds = new HashSet<Integer>();
-        System.out.println();
-        Student student = new Student(currentId, name, email, nickname, ra,groupIds);
+        Student student = new Student(currentId, name, email, ra,groupIds);
         students.put(email, student);
         return student;
     }
@@ -49,13 +45,6 @@ public class StudentService {
             student.setEmail(email);
         }
 
-        if (nickname != null) {
-            student.setNickname(nickname);
-        }
-
-        if (ra != null) {
-            student.setNickname(ra);
-        }
 
         students.put(id, student);
 
@@ -65,30 +54,24 @@ public class StudentService {
 
 
 
-    public Student enterGroup(int groupId, int studentId) {
+    public Student enterGroup(int groupId, String studentEmail) {
 
-        Student student = (Student) students.get(Integer.toString(studentId));
+        Student student = (Student) students.get(studentEmail);
         Group group = (Group) groups.get(Integer.toString(groupId));
 
         try {
             HashSet<Integer> groupList = new HashSet<Integer>(student.getGroupIds());
-            HashSet<Integer> studentsList = new HashSet<Integer>(group.getStudentIds());
+            HashSet<String> studentsList = new HashSet<String>(group.getStudentEmails());
 
 
             groupList.add(groupId);
-            studentsList.add(studentId);
+            studentsList.add(studentEmail);
 
             student.setGroupIds(groupList);
-            group.setStudentIds(studentsList);
+            group.setStudentEmails(studentsList);
         } catch (Exception e){
             new Error(e);
         }
-
-
-
-        students.put(studentId, student);
-        groups.put(groupId, group);
-
         return student;
 
     }

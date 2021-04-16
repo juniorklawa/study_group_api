@@ -18,11 +18,11 @@ public class GroupService {
     public Group add(String name, String subject, String whatsAppLink, int creatorId) {
         int currentId = count.incrementAndGet();
 
-        HashSet<Integer> studentIds = new HashSet<Integer>();
+        HashSet<String> studentEmails = new HashSet<String>();
         HashSet<Integer> noteIds = new HashSet<Integer>();
         HashSet<Integer> videoIds = new HashSet<Integer>();
 
-        Group group = new Group(currentId, name, subject, creatorId, whatsAppLink,studentIds,noteIds,videoIds);
+        Group group = new Group(currentId, name, subject, creatorId, whatsAppLink,studentEmails,noteIds,videoIds);
         groups.put(String.valueOf(currentId), group);
         return group;
     }

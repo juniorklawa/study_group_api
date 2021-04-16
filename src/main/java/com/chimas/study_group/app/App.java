@@ -75,10 +75,9 @@ public class App {
 
             String name = responseObject.getString("name");
             String email = responseObject.getString("email");
-            String nickname = responseObject.getString("nickname");
             String ra = responseObject.getString("ra");
 
-            Student student = studentService.add(name, email,nickname,ra);
+            Student student = studentService.add(name, email,ra);
             response.status(201);
             return om.writeValueAsString(student);
         });
@@ -201,10 +200,10 @@ public class App {
             JSONObject responseObject = new JSONObject(request.body());
 
             int groupId = responseObject.getInt("groupId");
-            int studentId = responseObject.getInt("studentId");
+            String studentEmail = responseObject.getString("studentEmail");
 
-
-            Student student = studentService.enterGroup(groupId,studentId);
+            System.out.println(studentEmail);
+            Student student = studentService.enterGroup(groupId,studentEmail);
 
             response.status(201);
             return om.writeValueAsString(student);
@@ -299,8 +298,8 @@ public class App {
             HashSet<Student> students = new HashSet<Student>();
 
 
-            for (int studentId : group.getStudentIds()) {
-                Student student = studentService.findById(Integer.toString(studentId));
+            for (String studentEmail : group.getStudentEmails()) {
+                Student student = studentService.findById(studentEmail);
                 students.add(student);
             }
 
@@ -311,8 +310,13 @@ public class App {
 
 
 
-        studentService.add("Everaldo Jr", "everaldo@email.com","everaldojunior","1798200");
-        groupService.add("ED2 - BSI", "Estrutura de Dados 2", "www.zapzap.com/chimas", 1);
+        studentService.add("Everaldo Jr", "everaldo@email.com","1798200");
+        groupService.add("ED2 - BSI", "Estrutura de Dados 2", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
+        groupService.add("Psicologia - S75", "Psicologia aplicada ao Trabalho", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
+        groupService.add("Economia - Professora Maria", "Economia", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
+        groupService.add("Sociologia - S71", "Sociologia", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
+        groupService.add("Cálculo 3 - S93", "Cálculo", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
+        groupService.add("Matemática Discreta - S73", "Matemática", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", 100);
 
 
         System.out.println("Running server on port 8080");
