@@ -206,7 +206,6 @@ public class App {
             int groupId = responseObject.getInt("groupId");
             String studentEmail = responseObject.getString("studentEmail");
 
-            System.out.println(studentEmail);
             Student student = studentService.enterGroup(groupId,studentEmail);
 
             response.status(201);
