@@ -1,0 +1,10 @@
+com/chimas/study_group/app/user/User.class
+com/chimas/study_group/app/App.class
+com/chimas/study_group/app/group/Group.class
+com/chimas/study_group/app/note/Note.class
+com/chimas/study_group/app/video/VideoService.class
+com/chimas/study_group/app/student/Student.class
+com/chimas/study_group/app/student/StudentService.class
+com/chimas/study_group/app/group/GroupService.class
+com/chimas/study_group/app/note/NoteService.class
+com/chimas/study_group/app/video/Video.class

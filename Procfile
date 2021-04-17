@@ -1,1 +1,2 @@
-web: java -jar ./target/study_group-1.0-SNAPSHOT-jar-with-dependencies.jar
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.chimas.study_group.app.App
+
