@@ -13,7 +13,6 @@ import com.chimas.study_group.app.video.Video;
 import com.chimas.study_group.app.video.VideoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.*;
-import spark.Filter;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,12 +33,19 @@ public class App {
     private static VideoService videoService = new VideoService();
     private static ObjectMapper om = new ObjectMapper();
 
+
+
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 8080; //return default port if heroku-port isn't set (i.e. on localhost)
+    }
+
     public static void main(String[] args) {
 
-        port(8080);
-
-
-
+        port(getHerokuAssignedPort());
 
         options("/*",
                 (request, response) -> {
