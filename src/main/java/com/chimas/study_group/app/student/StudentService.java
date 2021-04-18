@@ -77,6 +77,29 @@ public class StudentService {
     }
 
 
+    public Student exitGroup(int groupId, String studentEmail) {
+
+        Student student = (Student) students.get(studentEmail);
+        Group group = (Group) groups.get(Integer.toString(groupId));
+
+        try {
+            HashSet<Integer> groupList = new HashSet<Integer>(student.getGroupIds());
+            HashSet<String> studentsList = new HashSet<String>(group.getStudentEmails());
+
+
+            groupList.add(groupId);
+            studentsList.add(studentEmail);
+
+            student.setGroupIds(groupList);
+            group.setStudentEmails(studentsList);
+        } catch (Exception e){
+            new Error(e);
+        }
+        return student;
+
+    }
+
+
     public void delete(String id) {
         students.remove(id);
     }

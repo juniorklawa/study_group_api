@@ -217,6 +217,19 @@ public class App {
             return om.writeValueAsString(student);
         });
 
+        post("/group/user/exit", (request, response) -> {
+
+            JSONObject responseObject = new JSONObject(request.body());
+
+            int groupId = responseObject.getInt("groupId");
+            String studentEmail = responseObject.getString("studentEmail");
+
+            Student student = studentService.exitGroup(groupId, studentEmail);
+
+            response.status(201);
+            return om.writeValueAsString(student);
+        });
+
 
         //NOTES
 
