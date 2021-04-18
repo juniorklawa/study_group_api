@@ -282,9 +282,6 @@ public class App {
         // Add a Note
         post("/group/video/add", (request, response) -> {
 
-
-
-
             JSONObject responseObject = new JSONObject(request.body());
 
             String title = responseObject.getString("title");
@@ -296,6 +293,16 @@ public class App {
             Video video = videoService.addVideo(title, url, creatorEmail, groupId);
             response.status(201);
             return om.writeValueAsString(video);
+        });
+
+
+        post("/group/video/remove", (request, response) -> {
+            JSONObject responseObject = new JSONObject(request.body());
+
+            int videoId = responseObject.getInt("videoId");
+            videoService.delete(videoId);
+            response.status(200);
+            return om.writeValueAsString("Video deleted");
         });
 
 

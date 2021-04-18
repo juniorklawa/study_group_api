@@ -49,8 +49,8 @@ public class VideoService {
     }
 
 
-    public void delete(String id) {
-        videos.remove(id);
+    public void delete(int id) {
+        videos.remove(String.valueOf(id));
     }
 
     public List findAll() {
