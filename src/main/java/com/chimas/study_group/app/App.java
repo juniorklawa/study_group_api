@@ -338,9 +338,9 @@ public class App {
 
 
         studentService.add("Everaldo Jr", "everaldo@email.com", "1798200");
-        studentService.add("André", "andre@email.com", "17948200");
-        studentService.add("Erick", "erick@email.com", "17982200");
-        studentService.add("Christian", "christian@email.com", "17984200");
+        studentService.add("André A", "andre@email.com", "17948200");
+        studentService.add("Erick B", "erick@email.com", "17982200");
+        studentService.add("Christian C", "christian@email.com", "17984200");
         studentService.add("Seeder", "abc@abc.com", "1798201");
         groupService.add("ED2 - BSI", "Estrutura de Dados 2", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
         groupService.add("Psicologia - S75", "Psicologia aplicada ao Trabalho", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
