@@ -1,8 +1,7 @@
 package com.chimas.study_group.app.student;
 
 import com.chimas.study_group.app.group.Group;
-import com.chimas.study_group.app.note.Note;
-import com.chimas.study_group.app.user.User;
+
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -87,8 +86,8 @@ public class StudentService {
             HashSet<String> studentsList = new HashSet<String>(group.getStudentEmails());
 
 
-            groupList.add(groupId);
-            studentsList.add(studentEmail);
+            groupList.remove(groupId);
+            studentsList.remove(studentEmail);
 
             student.setGroupIds(groupList);
             group.setStudentEmails(studentsList);
