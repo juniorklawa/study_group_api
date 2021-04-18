@@ -34,7 +34,6 @@ public class App {
     private static ObjectMapper om = new ObjectMapper();
 
 
-
     static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (processBuilder.environment().get("PORT") != null) {
@@ -83,7 +82,7 @@ public class App {
             String email = responseObject.getString("email");
             String ra = responseObject.getString("ra");
 
-            Student student = studentService.add(name, email,ra);
+            Student student = studentService.add(name, email, ra);
             response.status(201);
             return om.writeValueAsString(student);
         });
@@ -139,7 +138,7 @@ public class App {
                 String nickname = responseObject.getString("nickname");
                 String ra = responseObject.getString("ra");
 
-                studentService.update(id, name, email,nickname,ra);
+                studentService.update(id, name, email, nickname, ra);
                 return om.writeValueAsString("student with id " + id + " is updated!");
             } else {
                 response.status(404);
@@ -172,10 +171,10 @@ public class App {
             String creatorEmail = responseObject.getString("creatorEmail");
             String whatsAppLink = responseObject.getString("whatsAppLink");
 
-            Group group = groupService.add(name, subject,whatsAppLink,creatorEmail);
+            Group group = groupService.add(name, subject, whatsAppLink, creatorEmail);
 
 
-            studentService.enterGroup(group.getId(),creatorEmail);
+            studentService.enterGroup(group.getId(), creatorEmail);
             response.status(201);
             return om.writeValueAsString(group);
         });
@@ -212,14 +211,11 @@ public class App {
             int groupId = responseObject.getInt("groupId");
             String studentEmail = responseObject.getString("studentEmail");
 
-            Student student = studentService.enterGroup(groupId,studentEmail);
+            Student student = studentService.enterGroup(groupId, studentEmail);
 
             response.status(201);
             return om.writeValueAsString(student);
         });
-
-
-
 
 
         //NOTES
@@ -230,10 +226,10 @@ public class App {
 
             String title = responseObject.getString("title");
             String description = responseObject.getString("description");
-            int creatorId = responseObject.getInt("creatorId");
+            String creatorEmail = responseObject.getString("creatorEmail");
             int groupId = responseObject.getInt("groupId");
 
-            Note note = noteService.addNote(title,description, creatorId,groupId);
+            Note note = noteService.addNote(title, description, creatorEmail, groupId);
             response.status(201);
             return om.writeValueAsString(note);
         });
@@ -258,20 +254,23 @@ public class App {
         });
 
 
-
-
         //NOTES
 
         // Add a Note
         post("/group/video/add", (request, response) -> {
+
+
+
+
             JSONObject responseObject = new JSONObject(request.body());
 
             String title = responseObject.getString("title");
             String url = responseObject.getString("url");
-            int creatorId = responseObject.getInt("creatorId");
+            String creatorEmail = responseObject.getString("creatorEmail");
             int groupId = responseObject.getInt("groupId");
 
-            Video video = videoService.addVideo(title,url, creatorId,groupId);
+
+            Video video = videoService.addVideo(title, url, creatorEmail, groupId);
             response.status(201);
             return om.writeValueAsString(video);
         });
@@ -292,10 +291,8 @@ public class App {
             }
 
 
-            return om.writeValueAsString(notes);
+            return om.writeValueAsString(videos);
         });
-
-
 
 
         get("/group/students/list/:groupId", (request, response) -> {
@@ -317,10 +314,8 @@ public class App {
         });
 
 
-
-
-        studentService.add("Everaldo Jr", "everaldo@email.com","1798200");
-        studentService.add("Seeder", "abc@abc.com","1798201");
+        studentService.add("Everaldo Jr", "everaldo@email.com", "1798200");
+        studentService.add("Seeder", "abc@abc.com", "1798201");
         groupService.add("ED2 - BSI", "Estrutura de Dados 2", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
         groupService.add("Psicologia - S75", "Psicologia aplicada ao Trabalho", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
         groupService.add("Economia - Professora Maria", "Economia", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");

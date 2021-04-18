@@ -19,24 +19,24 @@ public class NoteService {
         return (Note) notes.get(id);
     }
 
-    public Note addNote(String title, String description, int creatorId, int groupId) {
+    public Note addNote(String title, String description, String creatorEmail, int groupId) {
 
 
         int currentId = count.incrementAndGet();
 
         Group group = (Group) groups.get(Integer.toString(groupId));
 
-        Student student = (Student) students.get(Integer.toString(creatorId));
+        Student student = (Student) students.get(creatorEmail);
 
         try {
             HashSet<Integer> noteList = new HashSet<Integer>(group.getNoteIds());
             noteList.add(currentId);
             group.setNoteIds(noteList);
-        } catch (Exception e){
+        } catch (Exception e) {
             new Error(e);
         }
 
-        Note note = new Note(currentId,title,description,creatorId,student);
+        Note note = new Note(currentId, title, description, creatorEmail, student);
         notes.put(String.valueOf(currentId), note);
 
         return note;

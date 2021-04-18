@@ -7,15 +7,15 @@ public class Note {
     private int id;
     private String title;
     private String description;
-    private int creatorId;
+    private String creatorEmail;
     private Student creator;
 
 
-    public Note(int id, String title, String description, int creatorId, Student creator) {
+    public Note(int id, String title, String description, String creatorEmail, Student creator) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.creatorId = creatorId;
+        this.creatorEmail = creatorEmail;
         this.creator = creator;
     }
 
@@ -43,12 +43,12 @@ public class Note {
         this.description = description;
     }
 
-    public int getCreatorId() {
-        return creatorId;
+    public String getCreatorEmail() {
+        return creatorEmail;
     }
 
-    public void setCreatorId(int creatorId) {
-        this.creatorId = creatorId;
+    public void setCreatorEmail(String creatorEmail) {
+        this.creatorEmail = creatorEmail;
     }
 
     public Student getCreator() {

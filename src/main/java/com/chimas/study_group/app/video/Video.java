@@ -7,15 +7,15 @@ public class Video {
     private int id;
     private String title;
     private String url;
-    private int creatorId;
+    private String creatorEmail;
     private Student creator;
 
 
-    public Video(int id, String title, String url, int creatorId, Student creator) {
+    public Video(int id, String title, String url, String creatorEmail, Student creator) {
         this.id = id;
         this.title = title;
         this.url = url;
-        this.creatorId = creatorId;
+        this.creatorEmail = creatorEmail;
         this.creator = creator;
     }
 
@@ -43,12 +43,12 @@ public class Video {
         this.url = url;
     }
 
-    public int getCreatorId() {
-        return creatorId;
+    public String getCreatorEmail() {
+        return creatorEmail;
     }
 
-    public void setCreatorId(int creatorId) {
-        this.creatorId = creatorId;
+    public void setCreatorEmail(String creatorEmail) {
+        this.creatorEmail = creatorEmail;
     }
 
     public Student getCreator() {

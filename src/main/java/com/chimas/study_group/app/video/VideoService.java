@@ -20,13 +20,13 @@ public class VideoService {
         return (Video) videos.get(id);
     }
 
-    public Video addVideo(String title, String url, int creatorId, int groupId) {
+    public Video addVideo(String title, String url, String creatorEmail, int groupId) {
 
         int currentId = count.incrementAndGet();
 
         Group group = (Group) groups.get(Integer.toString(groupId));
 
-        Student student = (Student) students.get(Integer.toString(creatorId));
+        Student student = (Student) students.get(creatorEmail);
 
         try {
             HashSet<Integer> noteList = new HashSet<Integer>(group.getNoteIds());
@@ -38,11 +38,11 @@ public class VideoService {
             videoList.add(currentId);
             group.setVideoIds(noteList);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             new Error(e);
         }
 
-        Video video = new Video(currentId,title,url,creatorId,student);
+        Video video = new Video(currentId, title, url, creatorEmail, student);
         videos.put(String.valueOf(currentId), video);
 
         return video;
