@@ -50,7 +50,7 @@ public class VideoService {
 
 
     public void delete(int id) {
-        videos.remove(String.valueOf(id));
+        videos.remove(Integer.toString(id));
     }
 
     public List findAll() {
