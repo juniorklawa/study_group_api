@@ -43,8 +43,8 @@ public class NoteService {
     }
 
 
-    public void delete(String id) {
-        notes.remove(id);
+    public void delete(int id) {
+        notes.remove(Integer.toString(id));
     }
 
     public List findAll() {
