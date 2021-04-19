@@ -179,6 +179,18 @@ public class App {
             return om.writeValueAsString(group);
         });
 
+
+        post("/group/remove", (request, response) -> {
+            JSONObject responseObject = new JSONObject(request.body());
+
+            int groupId = responseObject.getInt("groupId");
+
+            groupService.delete(groupId);
+
+            response.status(200);
+            return om.writeValueAsString("Group removed");
+        });
+
         // Get group by id
         get("/group/:id", (request, response) -> {
             Group group = groupService.findById(request.params(":id"));

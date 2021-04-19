@@ -34,8 +34,8 @@ public class GroupService {
 
         return group;
     }
-    public void delete(String id) {
-        groups.remove(id);
+    public void delete(int id) {
+        groups.remove(Integer.toString(id));
     }
 
     public List findAll() {
