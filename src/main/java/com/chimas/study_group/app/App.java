@@ -197,8 +197,7 @@ public class App {
             if (group != null) {
                 return om.writeValueAsString(group);
             } else {
-                response.status(404); // 404 Not found
-                return om.writeValueAsString("student not found");
+                return om.writeValueAsString(null);
             }
         });
 
