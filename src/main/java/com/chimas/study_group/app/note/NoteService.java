@@ -29,9 +29,9 @@ public class NoteService {
         Student student = (Student) students.get(creatorEmail);
 
         try {
-            HashSet<Integer> noteList = new HashSet<Integer>(group.getNoteIds());
-            noteList.add(currentId);
-            group.setNoteIds(noteList);
+//            HashSet<Integer> noteList = new HashSet<Integer>(group.getNoteIds());
+//            noteList.add(currentId);
+//            group.setNoteIds(noteList);
         } catch (Exception e) {
             new Error(e);
         }

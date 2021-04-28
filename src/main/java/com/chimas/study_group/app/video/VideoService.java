@@ -1,51 +1,61 @@
 package com.chimas.study_group.app.video;
 
-import com.chimas.study_group.app.group.Group;
-import com.chimas.study_group.app.note.Note;
 import com.chimas.study_group.app.student.Student;
+import com.chimas.study_group.app.student.StudentService;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.chimas.study_group.app.App.*;
 import static com.chimas.study_group.app.App.videos;
+import static com.mongodb.client.model.Filters.eq;
 
 public class VideoService {
 
-    private static final AtomicInteger count = new AtomicInteger(0);
+
+    MongoClientURI mongoClientURI = new MongoClientURI(mongoUri);
+    MongoClient mongoClient = new MongoClient(mongoClientURI);
+    MongoDatabase database = mongoClient.getDatabase("easymeet");
+    MongoCollection<Document> videosCollection = database.getCollection("videos");
+    MongoCollection<Document> groupsCollection = database.getCollection("groups");
+
 
     public Video findById(String id) {
         return (Video) videos.get(id);
     }
 
-    public Video addVideo(String title, String url, String creatorEmail, int groupId) {
+    public Video addVideo(String title, String url, String creatorEmail, String groupId) {
 
-        int currentId = count.incrementAndGet();
+        StudentService studentService = new StudentService();
 
-        Group group = (Group) groups.get(Integer.toString(groupId));
+        ObjectId newObjectId = new ObjectId();
 
-        Student student = (Student) students.get(creatorEmail);
+        Document video = new Document("_id", newObjectId);
 
-        try {
-            HashSet<Integer> noteList = new HashSet<Integer>(group.getNoteIds());
-            noteList.add(currentId);
-            group.setNoteIds(noteList);
+        Student student = studentService.findByEmail(creatorEmail);
 
 
-            HashSet<Integer> videoList = new HashSet<Integer>(group.getVideoIds());
-            videoList.add(currentId);
-            group.setVideoIds(noteList);
 
-        } catch (Exception e) {
-            new Error(e);
-        }
+        video.append("title", title)
+                .append("url", url)
+                .append("creatorEmail", creatorEmail)
+                .append("student", student);
 
-        Video video = new Video(currentId, title, url, creatorEmail, student);
-        videos.put(String.valueOf(currentId), video);
 
-        return video;
+        groupsCollection.updateOne(eq("_id", new ObjectId(groupId)), new Document("$push", new Document("noteIds", newObjectId)));
+
+
+        Video createdVideo = new Video(newObjectId.toString(), title, url, creatorEmail, student);
+
+        videosCollection.insertOne(video);
+
+        return createdVideo;
     }
 
 
@@ -53,9 +63,6 @@ public class VideoService {
         videos.remove(Integer.toString(id));
     }
 
-    public List findAll() {
-        return new ArrayList<>(videos.values());
-    }
 
     public VideoService() {
     }

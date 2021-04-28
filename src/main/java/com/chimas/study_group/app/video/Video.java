@@ -4,14 +4,14 @@ import com.chimas.study_group.app.student.Student;
 
 public class Video {
 
-    private int id;
+    private String id;
     private String title;
     private String url;
     private String creatorEmail;
     private Student creator;
 
 
-    public Video(int id, String title, String url, String creatorEmail, Student creator) {
+    public Video(String id, String title, String url, String creatorEmail, Student creator) {
         this.id = id;
         this.title = title;
         this.url = url;
@@ -19,11 +19,11 @@ public class Video {
         this.creator = creator;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
