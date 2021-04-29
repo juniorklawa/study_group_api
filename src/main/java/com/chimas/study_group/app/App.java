@@ -14,18 +14,12 @@ import com.chimas.study_group.app.video.VideoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.*;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 public class App {
 
 
-    public static Map students = new HashMap<>();
-    public static Map groups = new HashMap<>();
-    public static Map notes = new HashMap<>();
-    public static Map videos = new HashMap<>();
     public static String mongoUri = "mongodb+srv://admin:sqj140uUnEp63nww@cluster0.jxelo.gcp.mongodb.net/easymeet?retryWrites=true&w=majority";
 
     private static StudentService studentService = new StudentService();
@@ -191,7 +185,7 @@ public class App {
             String title = responseObject.getString("title");
             String description = responseObject.getString("description");
             String creatorEmail = responseObject.getString("creatorEmail");
-            int groupId = responseObject.getInt("groupId");
+            String groupId = responseObject.getString("groupId");
 
             Note note = noteService.addNote(title, description, creatorEmail, groupId);
             response.status(201);
@@ -202,8 +196,9 @@ public class App {
         post("/group/note/remove", (request, response) -> {
             JSONObject responseObject = new JSONObject(request.body());
 
-            int noteId = responseObject.getInt("noteId");
-            noteService.delete(noteId);
+            String noteId = responseObject.getString("noteId");
+            String groupId = responseObject.getString("groupId");
+            noteService.delete(noteId, groupId);
             response.status(200);
             return om.writeValueAsString("Note deleted");
         });
@@ -214,17 +209,16 @@ public class App {
 
             Group group = groupService.findById(request.params(":groupId"));
 
-            JSONObject groupJSon = new JSONObject(group);
-//            String id = groupJSon.getJSONObject("_id").getString("$oid");
+
             HashSet<Note> notes = new HashSet<Note>();
-//@TODO
-//            for (int noteId : group.getNoteIds()) {
-//                Note note = noteService.findById(Integer.toString(noteId));
-//                notes.add(note);
-//            }
+
+            for (String noteId : group.getNoteIds()) {
+                Note note = noteService.findById(noteId);
+                notes.add(note);
+            }
 
 
-            return notes.isEmpty() ? om.writeValueAsString("") : om.writeValueAsString(notes);
+            return om.writeValueAsString(notes);
         });
 
 
@@ -247,8 +241,9 @@ public class App {
         post("/group/video/remove", (request, response) -> {
             JSONObject responseObject = new JSONObject(request.body());
 
-            int videoId = responseObject.getInt("videoId");
-            videoService.delete(videoId);
+            String videoId = responseObject.getString("videoId");
+            String groupId = responseObject.getString("groupId");
+            videoService.delete(videoId, groupId);
             response.status(200);
             return om.writeValueAsString("Video deleted");
         });
@@ -262,11 +257,10 @@ public class App {
 
             HashSet<Video> videos = new HashSet<Video>();
 
-//@TODO
-//            for (int videoId : group.getVideoIds()) {
-//                Video video = videoService.findById(Integer.toString(videoId));
-//                videos.add(video);
-//            }
+            for (String videoId : group.getVideoIds()) {
+                Video video = videoService.findById(videoId);
+                videos.add(video);
+            }
 
 
             return om.writeValueAsString(videos);
@@ -285,8 +279,6 @@ public class App {
 //        groupService.add("Cálculo 3 - S93", "Cálculo", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
 //        groupService.add("Matemática Discreta - S73", "Matemática", "https://chat.whatsapp.com/KntO7lh5A6wHq7YKlRkPPv", "abc@abc.com");
 
-
-        System.out.println("Conectado com Sucesso!");
         System.out.println("Running server on port 8080");
 
     }

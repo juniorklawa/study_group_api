@@ -2,18 +2,17 @@ package com.chimas.study_group.app.video;
 
 import com.chimas.study_group.app.student.Student;
 import com.chimas.study_group.app.student.StudentService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.json.JSONObject;
 
 import static com.chimas.study_group.app.App.*;
-import static com.chimas.study_group.app.App.videos;
 import static com.mongodb.client.model.Filters.eq;
 
 public class VideoService {
@@ -27,42 +26,55 @@ public class VideoService {
 
 
     public Video findById(String id) {
-        return (Video) videos.get(id);
+        Document foundVideo = videosCollection.find(eq("_id", new ObjectId(id))).first();
+        StudentService studentService = new StudentService();
+
+        JSONObject videoJSON = new JSONObject(foundVideo.toJson());
+
+        String videoId = videoJSON.getJSONObject("_id").getString("$oid");
+        String videoTitle = videoJSON.getString("title");
+        String videoUrl = videoJSON.getString("url");
+        String videoCreatorEmail = videoJSON.getString("creatorEmail");
+        Student creator = studentService.findByEmail(videoCreatorEmail);
+
+        Video video = new Video(videoId, videoTitle, videoUrl, videoCreatorEmail, creator);
+
+        return video;
     }
 
-    public Video addVideo(String title, String url, String creatorEmail, String groupId) {
+    public Video addVideo(String title, String url, String creatorEmail, String groupId) throws JsonProcessingException {
 
         StudentService studentService = new StudentService();
+        Student student = studentService.findByEmail(creatorEmail);
+        ObjectMapper om = new ObjectMapper();
 
         ObjectId newObjectId = new ObjectId();
 
         Document video = new Document("_id", newObjectId);
 
-        Student student = studentService.findByEmail(creatorEmail);
-
-
-
         video.append("title", title)
                 .append("url", url)
                 .append("creatorEmail", creatorEmail)
-                .append("student", student);
+                .append("student", om.writeValueAsString(student));
 
 
-        groupsCollection.updateOne(eq("_id", new ObjectId(groupId)), new Document("$push", new Document("noteIds", newObjectId)));
-
+        groupsCollection.updateOne(eq("_id", new ObjectId(groupId)), new Document("$push", new Document("videoIds", newObjectId.toString())));
 
         Video createdVideo = new Video(newObjectId.toString(), title, url, creatorEmail, student);
-
         videosCollection.insertOne(video);
 
         return createdVideo;
     }
 
+    public void delete(String id, String groupId) {
 
-    public void delete(int id) {
-        videos.remove(Integer.toString(id));
+        videosCollection.deleteOne(eq("_id", new ObjectId(id)));
+        groupsCollection.updateOne(eq("_id", new ObjectId(groupId)),
+                new Document("$pull",
+                        new Document("videoIds", id)
+                )
+        );
     }
-
 
     public VideoService() {
     }

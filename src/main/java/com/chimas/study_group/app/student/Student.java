@@ -3,14 +3,13 @@ package com.chimas.study_group.app.student;
 import com.chimas.study_group.app.user.User;
 
 import java.util.HashSet;
-import java.util.List;
 
 public class Student extends User {
 
     private String ra;
-    private List<String> groupIds;
+    private HashSet<String> groupIds;
 
-    public Student(String id, String name, String email, String ra, List<String> groupIds) {
+    public Student(String id, String name, String email, String ra, HashSet<String> groupIds) {
         super(email,id, name);
         this.groupIds = groupIds;
         this.ra = ra;
@@ -26,11 +25,11 @@ public class Student extends User {
     }
 
 
-    public List<String> getGroupIds() {
+    public HashSet<String> getGroupIds() {
         return groupIds;
     }
 
-    public void setGroupIds(List<String> groupIds) {
+    public void setGroupIds(HashSet<String> groupIds) {
         this.groupIds = groupIds;
     }
 }

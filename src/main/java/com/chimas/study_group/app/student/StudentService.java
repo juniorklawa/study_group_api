@@ -1,12 +1,9 @@
 package com.chimas.study_group.app.student;
 
-import com.chimas.study_group.app.group.Group;
-import com.chimas.study_group.app.group.GroupService;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
@@ -37,7 +34,7 @@ public class StudentService {
         String studentRa = studentJSON.getString("ra");
         JSONArray studentGroupIds = studentJSON.getJSONArray("groupIds");
 
-        List<String> convertedList = new ArrayList<>();
+        HashSet<String> convertedList = new HashSet<>();
 
         for (int i = 0, l = studentGroupIds.length(); i < l; i++) {
             convertedList.add(studentGroupIds.getString(i));
@@ -49,7 +46,7 @@ public class StudentService {
     }
 
     public Student add(String name, String email, String ra) {
-        List<String> groupIds = new ArrayList<>();
+        HashSet<String> groupIds = new HashSet<>();
 
         ObjectId newObjectId = new ObjectId();
 
@@ -62,7 +59,6 @@ public class StudentService {
 
         usersCollection.insertOne(student);
 
-        System.out.println(newObjectId);
 
         Student createdStudent = new Student(newObjectId.toString(), name, email, ra, groupIds);
 
