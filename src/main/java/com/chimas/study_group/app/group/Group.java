@@ -1,20 +1,17 @@
 package com.chimas.study_group.app.group;
-
-import com.chimas.study_group.app.note.Note;
-
 import java.util.HashSet;
 
 public class Group {
     private String name;
     private String subject;
-    private int id;
+    private String id;
     private String creatorEmail;
     private String whatsAppLink;
     private HashSet<String> studentEmails;
-    private HashSet<Integer> noteIds;
-    private HashSet<Integer> videoIds;
+    private HashSet<String> noteIds;
+    private HashSet<String> videoIds;
 
-    public Group(int id, String name, String subject, String creatorEmail, String whatsAppLink, HashSet<String> studentEmails,HashSet<Integer> noteIds, HashSet<Integer> videoIds) {
+    public Group(String id, String name, String subject, String creatorEmail, String whatsAppLink, HashSet<String> studentEmails,HashSet<String> noteIds, HashSet<String> videoIds) {
         this.name = name;
         this.subject = subject;
         this.id = id;
@@ -42,11 +39,11 @@ public class Group {
         this.subject = subject;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -75,19 +72,19 @@ public class Group {
         this.studentEmails = studentEmails;
     }
 
-    public HashSet<Integer> getNoteIds() {
+    public HashSet<String> getNoteIds() {
         return noteIds;
     }
 
-    public HashSet<Integer> getVideoIds() {
+    public void setNoteIds(HashSet<String> noteIds) {
+        this.noteIds = noteIds;
+    }
+
+    public HashSet<String> getVideoIds() {
         return videoIds;
     }
 
-    public void setVideoIds(HashSet<Integer> videoIds) {
+    public void setVideoIds(HashSet<String> videoIds) {
         this.videoIds = videoIds;
-    }
-
-    public void setNoteIds(HashSet<Integer> noteIds) {
-        this.noteIds = noteIds;
     }
 }

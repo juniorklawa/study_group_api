@@ -7,9 +7,9 @@ import java.util.HashSet;
 public class Student extends User {
 
     private String ra;
-    private HashSet<Integer> groupIds;
+    private HashSet<String> groupIds;
 
-    public Student(int id, String name, String email, String ra, HashSet<Integer> groupIds) {
+    public Student(String id, String name, String email, String ra, HashSet<String> groupIds) {
         super(email,id, name);
         this.groupIds = groupIds;
         this.ra = ra;
@@ -24,11 +24,12 @@ public class Student extends User {
         this.ra = ra;
     }
 
-    public HashSet<Integer> getGroupIds() {
+
+    public HashSet<String> getGroupIds() {
         return groupIds;
     }
 
-    public void setGroupIds(HashSet<Integer> groupIds) {
+    public void setGroupIds(HashSet<String> groupIds) {
         this.groupIds = groupIds;
     }
 }

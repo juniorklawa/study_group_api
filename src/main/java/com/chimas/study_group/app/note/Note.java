@@ -4,14 +4,14 @@ import com.chimas.study_group.app.student.Student;
 
 public class Note {
 
-    private int id;
+    private String id;
     private String title;
     private String description;
     private String creatorEmail;
     private Student creator;
 
 
-    public Note(int id, String title, String description, String creatorEmail, Student creator) {
+    public Note(String id, String title, String description, String creatorEmail, Student creator) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -19,11 +19,11 @@ public class Note {
         this.creator = creator;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
