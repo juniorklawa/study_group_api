@@ -20,7 +20,7 @@ import java.util.List;
 public class App {
 
 
-    public static String mongoUri = "mongodb+srv://admin:sqj140uUnEp63nww@cluster0.jxelo.gcp.mongodb.net/easymeet?retryWrites=true&w=majority";
+    public static String mongoUri = "mongodb+srv://<YOUR_NICKNAME>:<YOUR_PASSWORD>@cluster0.jxelo.gcp.mongodb.net/easymeet?retryWrites=true&w=majority";
 
     private static StudentService studentService = new StudentService();
     private static GroupService groupService = new GroupService();
